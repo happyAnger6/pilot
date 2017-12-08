@@ -9,7 +9,7 @@
     <title>Bootstrap Template Page for Go Web Programming</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap-4.0.0-beta.2-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   </head>
 
   <body>
