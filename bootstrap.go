@@ -16,7 +16,7 @@ func Hello(response http.ResponseWriter, request *http.Request) {
 
 	zhangxiaoan := person{Id: 1001, Name: "zhangxiaoan", Country: "Chian"}
 
-	tmpl, err := template.ParseFiles("./templates/user.tpl")
+	tmpl, err := template.ParseFiles("./templates/index.tpl")
 	if err != nil {
 		fmt.Println("Erro happened.")
 	}
