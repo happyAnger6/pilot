@@ -13,20 +13,20 @@
     <title>Navbar Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="bootstrap/3.3.7/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/bootstrap/3.3.7/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/navbar.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
 
-    <script src="bootstrap/3.3.7/assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="/bootstrap/3.3.7/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="js/html5shiv.min.js"></script>
-      <script src="js/respond.min.js"></script>
+      <script src="/js/html5shiv.min.js"></script>
+      <script src="/js/respond.min.js"></script>
     <![endif]-->
   </head>
   <body>

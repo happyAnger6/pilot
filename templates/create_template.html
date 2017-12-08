@@ -1,0 +1,37 @@
+{{template "header" .}}
+{{template "navbar" .}}
+<div class="container">
+ <h1>创 建 模 板</h1>
+ <form role="form" method="post" action="/deploy/create_template">
+ <div class="form-group">
+     <div class="row">
+ <label for="tname">模板名</label>
+   <span class="form-group-addon">*</span>
+   <input type="text" class="form-control" placeholder="eg.64mpu" name="tname" id="tname" aria-describedby="tname">
+     </div>
+     <div class="row">
+ <label for="tdes">描述</label>
+   <input type="text" class="form-control" placeholder="eg.64 bit mpu have 48 interfaces" name="tdes" id="tdes" aria-describedby="tdes">
+     </div>
+     <div class="row">
+ <label for="timage">镜像</label>
+   <span class="form-group-addon">*</span>
+   <input type="text" class="form-control" placeholder="eg.MPUD001-120701" name="timage" id="timage" aria-describedby="timage">
+     </div>
+
+ <h3>网络配置</h3>
+     <div class="row">
+ <label for="tginter">G口个数</label>
+   <input type="text" class="form-control" placeholder="eg.8" name="tginter" id="tginter" aria-describedby="tginter">
+     </div>
+     <div class="row">
+ <label for="ttenginter">TG口个数</label>
+   <input type="text" class="form-control" placeholder="eg.8" name="ttenginter" id="ttenginter" aria-describedby="ttenginter">
+     </div>
+     <div class="row">
+ <button type="submit" class="btn btn-lg">创建</button>
+     </div>
+ </div>
+ </form>
+</div> <!--/.div container -->
+{{template "footer" .}}
