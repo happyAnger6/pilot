@@ -1,0 +1,43 @@
+{{template "header" .}}
+{{template "navbar" .}}
+<div class="container">
+ <h1>启动simware板子</h1>
+ <h3>基本配置</h3>
+ <form role="form" method="post" action="/deploy/startBoard">
+ <div class="form-group">
+     <div class="row">
+ <label for="bname">工程名</label>
+   <span class="form-group-addon">*</span>
+   <input type="text" class="form-control" placeholder="eg.sim01 工程名相同说明属于同一设备" name="bname" id="bname" aria-describedby="bname">
+     </div>
+     <div class="row">
+ <label for="bchassis">框号</label>
+   <input type="text" class="form-control" placeholder="eg.0" name="bchassis" id="bchassis" aria-describedby="bchassis">
+     </div>
+     <div class="row">
+ <label for="bslot">槽号</label>
+   <span class="form-group-addon">*</span>
+   <input type="text" class="form-control" placeholder="eg.0" name="bslot" id="bslot" aria-describedby="bslot">
+     </div>
+     <div class="row">
+         <label for="bcpu">cpu号</label>
+         <span class="form-group-addon">*</span>
+         <input type="text" class="form-control" placeholder="eg.0" name="bcpu" id="bcpu" aria-describedby="bcpu">
+     </div>
+
+ <h3>部署配置</h3>
+     <div class="row">
+         <label for="bimage">镜像</label>
+         <input type="text" class="form-control" placeholder="eg.comware.io/v9trunk:d001" name="bimage" id="bimage" aria-describedby="bimage">
+     </div>
+     <div class="row">
+ <label for="brunnode">部署节点</label>
+   <input type="text" class="form-control" placeholder="eg.k8smaster-node1" name="brunnode" id="brunnode" aria-describedby="brunnode">
+     </div>
+     <div class="row">
+ <button type="submit" class="btn btn-lg">启动</button>
+     </div>
+ </div>
+ </form>
+</div> <!--/.div container -->
+{{template "footer" .}}

@@ -4,32 +4,30 @@ import (
 	"fmt"
 	"net/http"
 	"html/template"
+
 	"github.com/gorilla/mux"
 
 	"pilot/controllers/deploy"
 )
 
-func Hello(response http.ResponseWriter, request *http.Request) {
-	type person struct {
-		Id int
-		Name string
-		Country string
-	}
-
-	zhangxiaoan := person{Id: 1001, Name: "zhangxiaoan", Country: "Chian"}
+func Index(response http.ResponseWriter, request *http.Request) {
 
 	tmpl, err := template.ParseFiles("./templates/index.tpl","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {
-		fmt.Println("Erro happened:%v",err)
+		fmt.Println("Error happened:%v",err)
+		return
 	}
-	tmpl.Execute(response, zhangxiaoan)
+	tmpl.Execute(response, nil)
 }
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", Hello)
-	r.HandleFunc("/deploy/create_template", deploy.CreateTemplate)
+	r.HandleFunc("/", Index)
+
+	r.HandleFunc("/deploy/createTemplate", deploy.CreateTemplate)
+	r.HandleFunc("/deploy/startBoard", deploy.StartBoard)
+
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 	http.ListenAndServe(":8080", r)
 }
