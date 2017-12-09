@@ -6,9 +6,6 @@ import (
 	"html/template"
 )
 
-type template struct {
-
-}
 func CreateTemplate(response http.ResponseWriter, request *http.Request) {
 	method := request.Method
 	fmt.Printf("Method:%v", method)
