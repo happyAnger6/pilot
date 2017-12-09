@@ -1,0 +1,28 @@
+{{template "header" .}}
+{{template "navbar" .}}
+<div class="container">
+    <div class="table-responsive">
+        <table class="table">
+            <caption>所有的板子</caption>
+            <thead>
+            <tr>
+                <th>板名称</th>
+                <th>使用镜像</th>
+                <th>运行状态</th>
+                <th>串口</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .}}
+            <tr>
+                <td>{{.Name}}</td>
+                <td>{{.Image}}</td>
+                <td>{{.Status}}</td>
+                <td><a href="https://172.28.14.35:4200">连接</a></td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
+</div> <!--/.div container -->
+{{template "footer" .}}

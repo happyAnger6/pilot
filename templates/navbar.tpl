@@ -16,7 +16,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li><a href="/">主 页</a></li>
-              <li><a href="/containers">容 器</a></li>
+              <li><a href="/list/boards">板　子</a></li>
               <li><a href="/hosts">主 机</a></li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">部署simware <span class="caret"></span></a>
