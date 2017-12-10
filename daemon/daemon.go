@@ -5,11 +5,19 @@ import (
 
 	"pilot/deploy/driver"
 	"pilot/deploy/driver/k8s"
+	"pilot/models/deploy/board"
+	"path/filepath"
+	"pilot/models"
+)
+
+const (
+	storerootdir="/var/pilot/store"
 )
 
 type Daemon struct {
 	mux sync.Mutex
 	driver.Driver
+	boardStore board.BoardStore
 }
 
 var daemon *Daemon
@@ -30,5 +38,18 @@ func initialize()(*Daemon, error) {
 	driver, err := k8s.Init(); if err != nil {
 		return nil, err
 	}
-	return &Daemon{mux: sync.Mutex{}, Driver:driver}, nil;
+
+	boardRoot := filepath.Join(storerootdir, "board")
+	bfs, err := models.NewFSStoreBackend(boardRoot)
+	if err != nil {
+		return nil, err
+	}
+
+	bs, err := board.NewBoardStore(bfs)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Daemon{mux: sync.Mutex{}, Driver: driver,
+				boardStore: bs}, nil;
 }
