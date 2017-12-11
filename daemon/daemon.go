@@ -51,6 +51,7 @@ func initialize()(*Daemon, error) {
 		return nil, err
 	}
 
-	return &Daemon{mux: sync.Mutex{}, Driver: driver,
-				BoardStore: bs}, nil;
+	daemon = &Daemon{mux: sync.Mutex{}, Driver: driver,
+				BoardStore: bs}
+	return daemon, nil
 }

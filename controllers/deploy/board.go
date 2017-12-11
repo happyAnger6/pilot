@@ -46,6 +46,7 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 			return
 		}
 
+		fmt.Printf("board:%v\r\n", bd)
 		d.BoardStore.Store(bd.ProjName, bd)
 		err = d.StartContainer(opts.CreateOpts["bname"].(string), opts)
 		if err != nil {
