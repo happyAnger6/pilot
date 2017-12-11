@@ -11,7 +11,6 @@ import (
 	log "github.com/sirupsen/logrus"
 
 	"pilot/deploy/driver"
-	"fmt"
 )
 
 const (
