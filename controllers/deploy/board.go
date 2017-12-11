@@ -7,16 +7,27 @@ import (
 	"pilot/daemon"
 	"pilot/deploy/driver"
 	"pilot/models/deploy/board"
+	"strconv"
 )
 
 func parseBoard(params map[string][]string)(*board.Board, error) {
 	b := &board.Board{}
 	for k, v := range params {
 		switch k {
-		case "bimage":
-			b.Image = v[0]
 		case "bname":
 			b.ProjName = v[0]
+		case "btype":
+			b.BoardType = v[0]
+		case "bimage":
+			b.Image = v[0]
+		case "brunnode":
+			b.RunNode = v[0]
+		case "bchassis":
+			b.ChassisNumber, _ = strconv.ParseInt(v[0], 10, 64)
+		case "bslot":
+			b.SlotNumber, _ = strconv.ParseInt(v[0], 10, 64)
+		case "bcpu":
+			b.CpuNumber, _ = strconv.ParseInt(v[0], 10, 64)
 		}
 	}
 
@@ -48,7 +59,7 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 
 		fmt.Printf("board:%v\r\n", bd)
 		d.BoardStore.Store(bd.ProjName, bd)
-		err = d.StartContainer(opts.CreateOpts["bname"].(string), opts)
+		err = d.StartContainer(bd.ProjName, opts)
 		if err != nil {
 			fmt.Printf("start Container failed:%v\r\n", err)
 		}
