@@ -29,6 +29,7 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 	if method == "POST" {
 		request.ParseForm()
 		opts := &driver.ContainerOpts{}
+		opts.CreateOpts = make(map[string]interface{})
 		for k, v  := range request.Form {
 			fmt.Printf("k:%v\r\n", k)
 			fmt.Printf("v:%v\r\n", v)
