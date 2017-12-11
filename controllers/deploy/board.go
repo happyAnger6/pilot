@@ -10,14 +10,19 @@ import (
 )
 
 func parseBoard(params map[string][]string)(*board.Board, error) {
-	board := &board.Board{}
+	b := &board.Board{}
 	for k, v := range params {
 		switch k {
 		case "bimage":
-
+			b.Image = v[0]
+		case "bname":
+			b.ProjName = v[0]
 		}
 	}
+
+	return b, nil
 }
+
 func StartBoard(response http.ResponseWriter, request *http.Request) {
 	method := request.Method
 	fmt.Printf("Method:%v", method)
@@ -29,12 +34,18 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 			fmt.Printf("v:%v\r\n", v)
 			opts.CreateOpts[k] = v
 		}
+
 		d, err := daemon.GetInstance(); if err != nil {
 			fmt.Printf("Daemon GetInstance err:%v", err)
 			return
 		}
 
-		d.BoardStore.Store()
+		bd, err := parseBoard(request.Form); if err != nil {
+			fmt.Printf("parseBoard err:%v\r\n", err)
+			return
+		}
+
+		d.BoardStore.Store(bd.ProjName, bd)
 		err = d.StartContainer(opts.CreateOpts["bname"].(string), opts)
 		if err != nil {
 			fmt.Printf("start Container failed:%v\r\n", err)
