@@ -1,7 +1,7 @@
 package stub
 
 import (
-	"fmt"
+	log "github.com/sirupsen/logrus"
 
 	"pilot/deploy/driver"
 )
@@ -18,7 +18,7 @@ func (d *Driver) String() string {
 }
 
 func (d *Driver) StartContainer(name string, opts *driver.ContainerOpts) error {
-	fmt.Printf("StartContainer: %v\r\n", opts)
+	log.Debugf("StartContainer: %v\r\n", opts)
 
 	return nil
 }

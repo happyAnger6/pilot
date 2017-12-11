@@ -3,14 +3,15 @@ package k8s
 import (
 	"os"
 	"path/filepath"
-	"fmt"
 
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/kubernetes"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	v1 "k8s.io/api/core/v1"
+	log "github.com/sirupsen/logrus"
 
 	"pilot/deploy/driver"
+	"fmt"
 )
 
 const (
@@ -26,7 +27,7 @@ func (d *Driver) String() string {
 }
 
 func (d *Driver) StartContainer(name string, opts *driver.ContainerOpts) error {
-	fmt.Printf("StartContainer: %v\r\n", opts)
+	log.Debugf("StartContainer: %v\r\n", opts)
 
 	chassis := opts.CreateOpts["bchassis"].(string)
 	slot := opts.CreateOpts["bslot"].(string)
@@ -106,7 +107,7 @@ func Init() (driver.Driver, error){
 	if home := homeDir(); home != ""{
 		kubeConfigPath = filepath.Join(home, ".kube", "config")
 	}
-	fmt.Printf("use config file:%v\r\n", kubeConfigPath)
+	log.Debugf("use config file:%v\r\n", kubeConfigPath)
 
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfigPath)
 	if err != nil {
