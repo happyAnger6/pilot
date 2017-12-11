@@ -8,6 +8,7 @@ import (
 	"pilot/models/deploy/board"
 	"path/filepath"
 	"pilot/models"
+	"pilot/deploy/driver/stub"
 )
 
 const (
@@ -35,7 +36,7 @@ func GetInstance() (*Daemon, error) {
 }
 
 func initialize()(*Daemon, error) {
-	driver, err := k8s.Init(); if err != nil {
+	driver, err := stub.Init(); if err != nil {
 		return nil, err
 	}
 
