@@ -1,7 +1,6 @@
 package deploy
 
 import (
-	"fmt"
 	"net/http"
 	"html/template"
 	"strconv"
