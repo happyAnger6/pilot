@@ -6,6 +6,7 @@ import (
 	"html/template"
 	_ "pilot/daemon"
 	_ "k8s.io/api/core/v1"
+	"pilot/daemon"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
@@ -14,10 +15,6 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		Image string
 		Status string
 	}
-	boards := []board{{Name: "sim01-mpu-0-1-0", Image: "v9trunk:d001", Status:"Up"},
-					{Name: "sim01-lpu-0-3-0", Image: "v9trunk:d002", Status:"Down"}}
-
-					/*
 	d, err := daemon.GetInstance(); if err != nil {
 		fmt.Printf("Daemon GetInstance err:%v", err)
 		return
@@ -29,9 +26,6 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	for _, board := range boards.Items {
-		pod := board.(v1.Pod)
-	}*/
 	tmpl, err := template.ParseFiles("./templates/list_boards.html","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {
@@ -39,5 +33,5 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	tmpl.Execute(response, boards)
+	tmpl.Execute(response, boards.Items)
 }

@@ -6,8 +6,18 @@ import (
 	"html/template"
 	"pilot/daemon"
 	"pilot/deploy/driver"
+	"pilot/models/deploy/board"
 )
 
+func parseBoard(params map[string][]string)(*board.Board, error) {
+	board := &board.Board{}
+	for k, v := range params {
+		switch k {
+		case "bimage":
+
+		}
+	}
+}
 func StartBoard(response http.ResponseWriter, request *http.Request) {
 	method := request.Method
 	fmt.Printf("Method:%v", method)
@@ -24,6 +34,7 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 			return
 		}
 
+		d.BoardStore.Store()
 		err = d.StartContainer(opts.CreateOpts["bname"].(string), opts)
 		if err != nil {
 			fmt.Printf("start Container failed:%v\r\n", err)

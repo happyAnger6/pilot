@@ -17,7 +17,7 @@ const (
 type Daemon struct {
 	mux sync.Mutex
 	driver.Driver
-	boardStore board.BoardStore
+	BoardStore board.BoardStore
 }
 
 var daemon *Daemon
@@ -51,5 +51,5 @@ func initialize()(*Daemon, error) {
 	}
 
 	return &Daemon{mux: sync.Mutex{}, Driver: driver,
-				boardStore: bs}, nil;
+				BoardStore: bs}, nil;
 }
