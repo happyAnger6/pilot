@@ -4,7 +4,7 @@ import (
 	"sync"
 
 	"pilot/deploy/driver"
-	"pilot/deploy/driver/k8s"
+	_ "pilot/deploy/driver/k8s"
 	"pilot/models/deploy/board"
 	"path/filepath"
 	"pilot/models"
