@@ -8,6 +8,7 @@ import (
 	_ "k8s.io/api/core/v1"
 	"pilot/daemon"
 	"pilot/models/deploy/board"
+	"strconv"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
@@ -29,9 +30,9 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		brd := showBoard{
 			Name: b.ProjName,
 			Type: b.BoardType,
-			Chassis: string(b.ChassisNumber),
-			Slot: string(b.SlotNumber),
-			Cpu: string(b.CpuNumber),
+			Chassis: strconv.FormatInt(b.ChassisNumber, 10),
+			Slot: strconv.FormatInt(b.SlotNumber, 10),
+			Cpu: strconv.FormatInt(b.CpuNumber, 10),
 			Image: b.Image,
 		}
 		log.Debugf("append board:%v b:%v", brd, b)
