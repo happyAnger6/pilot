@@ -9,10 +9,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+type BoardWalkFunc func(board *Board) error
 // Store is an interface for creating and accessing boards
 type BoardStore interface {
 	Store(name string, board *Board) error
 	Get(name string) (*Board, error)
+	Walk(walkFunc BoardWalkFunc) error
 	Delete(name string) error
 }
 
@@ -37,6 +39,13 @@ func NewBoardStore(fs models.StoreBackend) (BoardStore, error) {
 	return is, nil
 }
 
+func (is *store) Walk(f BoardWalkFunc) error {
+	for _, v := range is.boards {
+		f(v)
+	}
+
+	return nil
+}
 func (is *store) restore() error {
 	err := is.fs.Walk(func(name string) error {
 		board, err := is.Get(name)

@@ -7,8 +7,9 @@
             <thead>
             <tr>
                 <th>板名称</th>
-                <th>使用镜像</th>
-                <th>运行状态</th>
+                <th>板类型</th>
+                <th>框--槽--CPU</th>
+                <th>镜像版本</th>
                 <th>组网连线</th>
                 <th>串口</th>
             </tr>
@@ -17,9 +18,10 @@
             {{range .}}
             <tr>
                 <td>{{.Name}}</td>
+                <td>{{.Type}}</td>
+                <td>{{.Chassis}}--{{.Slot}}--{{.Cpu}}</td>
                 <td>{{.Image}}</td>
-                <td>{{.Status}}</td>
-                <td>{{.Status}}</td>
+                <td><a href="/network/connect/{{.Name}}">开始连线</a></td>
                 <td><a href="https://172.28.14.35:4200">连接</a></td>
             </tr>
             {{end}}

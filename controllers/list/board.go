@@ -7,20 +7,36 @@ import (
 	log "github.com/sirupsen/logrus"
 	_ "k8s.io/api/core/v1"
 	"pilot/daemon"
+	"pilot/models/deploy/board"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
-	type board struct {
-		Name string
-		Image string
-		Status string
-	}
 	d, err := daemon.GetInstance(); if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
 		return
 	}
 
-	boards, err := d.ListContainers()
+	type showBoard struct {
+		Name string
+		Type string
+		Chassis string
+		Slot string
+		Cpu string
+		Image string
+	}
+	showBoards := []showBoard{}
+	err = d.BoardStore.Walk(func(b *board.Board) error {
+		brd := showBoard{
+			Name: b.ProjName,
+			Type: b.BoardType,
+			Chassis: string(b.ChassisNumber),
+			Slot: string(b.SlotNumber),
+			Cpu: string(b.CpuNumber),
+			Image: b.Image,
+		}
+		showBoards = append(showBoards, brd)
+		return nil
+	})
 	if err != nil {
 		log.Errorf("list Container failed:%v\r\n", err)
 		return
@@ -33,5 +49,5 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	tmpl.Execute(response, boards.Items)
+	tmpl.Execute(response, showBoards)
 }
