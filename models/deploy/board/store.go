@@ -7,7 +7,6 @@ import (
 
 	"pilot/models"
 	"github.com/sirupsen/logrus"
-	"github.com/cloudflare/cfssl/log"
 )
 
 type BoardWalkFunc func(board *Board) error
@@ -55,12 +54,14 @@ func (is *store) restore() error {
 			return nil
 		}
 
-		log.Debugf("restore a board:%v", board)
+		logrus.Debugf("restore a board:%v", board)
 		is.boards[name] = board
 
 		return nil
 	})
+
 	if err != nil {
+		log.Errorf("restore board failed:%v", err)
 		return err
 	}
 
