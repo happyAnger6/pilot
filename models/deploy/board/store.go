@@ -61,7 +61,7 @@ func (is *store) restore() error {
 	})
 
 	if err != nil {
-		log.Errorf("restore board failed:%v", err)
+		logrus.Errorf("restore board failed:%v", err)
 		return err
 	}
 
