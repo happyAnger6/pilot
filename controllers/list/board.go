@@ -34,7 +34,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 			Cpu: string(b.CpuNumber),
 			Image: b.Image,
 		}
-		log.Debugf("append board:%v", brd)
+		log.Debugf("append board:%v b:%v", brd, b)
 		showBoards = append(showBoards, brd)
 		return nil
 	})
