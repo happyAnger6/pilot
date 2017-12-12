@@ -76,3 +76,29 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 	tmpl.Execute(response, nil)
 }
 
+func DeleteBoard(response http.ResponseWriter, request *http.Request) {
+	params := request.URL.Query()
+	name := params.Get(":name")
+	method := request.Method
+	log.Debugf("DeleteBoard Method:%v name:%v", method, name)
+
+	d, err := daemon.GetInstance(); if err != nil {
+		log.Errorf("Daemon GetInstance err:%v", err)
+		return
+	}
+
+	d.BoardStore.Delete(name)
+	err = d.RemoveContainer(name)
+	if err != nil {
+		log.Errorf("remove Container failed:%v\r\n", err)
+	}
+
+	tmpl, err := template.ParseFiles("./templates/list_boards.html","./templates/header.tpl",
+		"./templates/navbar.tpl","./templates/footer.tpl")
+	if err != nil {
+		log.Errorf("Error happened:%v", err)
+		return
+	}
+
+	tmpl.Execute(response, nil)
+}
