@@ -28,7 +28,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 	showBoards := []showBoard{}
 	err = d.BoardStore.Walk(func(b *board.Board) error {
 		brd := showBoard{
-			Name: b.ProjName,
+			Name: b.BoardName,
 			Type: b.BoardType,
 			Chassis: strconv.FormatInt(b.ChassisNumber, 10),
 			Slot: strconv.FormatInt(b.SlotNumber, 10),
