@@ -10,6 +10,7 @@ import (
 	"pilot/daemon"
 	"pilot/deploy/driver"
 	"pilot/models/deploy/board"
+	"github.com/gorilla/mux"
 )
 
 func parseBoard(params map[string][]string)(*board.Board, error) {
@@ -82,10 +83,8 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 }
 
 func DeleteBoard(response http.ResponseWriter, request *http.Request) {
-	params := request.URL.Query()
-	name := params.Get(":name")
-	method := request.Method
-	log.Debugf("DeleteBoard Method:%v name:%v", method, name)
+	name := mux.Vars(request)["name"]
+	log.Debugf("DeleteBoard name:%v",  name)
 
 	d, err := daemon.GetInstance(); if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
