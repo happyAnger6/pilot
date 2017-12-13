@@ -110,6 +110,10 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		Name: brd.ProjName,
 		BoardName: brd.BoardName,
 		Type: brd.BoardType,
+		Chassis: strconv.FormatInt(brd.ChassisNumber, 10),
+		Slot: strconv.FormatInt(brd.SlotNumber, 10),
+		Cpu: strconv.FormatInt(brd.CpuNumber, 10),
+		Image: brd.Image,
 		IfList: iflists,
 	}
 
