@@ -19,6 +19,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 
 	type showBoard struct {
 		Name string
+		BoardName string
 		Type string
 		Chassis string
 		Slot string
@@ -29,6 +30,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 	err = d.BoardStore.Walk(func(b *board.Board) error {
 		brd := showBoard{
 			Name: b.ProjName,
+			BoardName: b.BoardName,
 			Type: b.BoardType,
 			Chassis: strconv.FormatInt(b.ChassisNumber, 10),
 			Slot: strconv.FormatInt(b.SlotNumber, 10),

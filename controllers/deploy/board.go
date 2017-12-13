@@ -66,8 +66,8 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 		}
 
 		log.Debugf("board:%v\r\n", bd)
-		d.BoardStore.Store(bd.ProjName, bd)
-		err = d.StartContainer(bd.ProjName, opts)
+		d.BoardStore.Store(bd.BoardName, bd)
+		err = d.StartContainer(bd.BoardName, opts)
 		if err != nil {
 			log.Errorf("start Container failed:%v\r\n", err)
 		}

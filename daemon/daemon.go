@@ -8,7 +8,8 @@ import (
 	"pilot/models/deploy/board"
 	"path/filepath"
 	"pilot/models"
-	"pilot/deploy/driver/stub"
+	_ "pilot/deploy/driver/stub"
+	"pilot/deploy/driver/simwareshell"
 )
 
 const (
@@ -36,7 +37,7 @@ func GetInstance() (*Daemon, error) {
 }
 
 func initialize()(*Daemon, error) {
-	driver, err := stub.Init(); if err != nil {
+	driver, err := simwareshell.Init(); if err != nil {
 		return nil, err
 	}
 
