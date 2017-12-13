@@ -14,6 +14,7 @@ import (
 
 func parseBoard(params map[string][]string)(*board.Board, error) {
 	b := &board.Board{}
+	var chassis, slot, cpu string
 	for k, v := range params {
 		switch k {
 		case "bname":
@@ -25,14 +26,18 @@ func parseBoard(params map[string][]string)(*board.Board, error) {
 		case "brunnode":
 			b.RunNode = v[0]
 		case "bchassis":
-			b.ChassisNumber, _ = strconv.ParseInt(v[0], 10, 64)
+			chassis = v[0]
+			b.ChassisNumber, _ = strconv.ParseInt(chassis, 10, 64)
 		case "bslot":
-			b.SlotNumber, _ = strconv.ParseInt(v[0], 10, 64)
+			slot = v[0]
+			b.SlotNumber, _ = strconv.ParseInt(slot, 10, 64)
 		case "bcpu":
-			b.CpuNumber, _ = strconv.ParseInt(v[0], 10, 64)
+			cpu = v[0]
+			b.CpuNumber, _ = strconv.ParseInt(cpu, 10, 64)
 		}
 	}
 
+	b.BoardName = b.ProjName + chassis + slot + cpu
 	return b, nil
 }
 

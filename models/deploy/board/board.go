@@ -9,6 +9,7 @@ const (
 
 type Board struct {
 	ProjName string
+	BoardName string
 	BoardType string
 	ChassisNumber int64
 	SlotNumber int64
