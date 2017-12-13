@@ -33,7 +33,7 @@ func main() {
 
 	r.HandleFunc("/network/connect/{name}", deploy.DeleteBoard)
 	r.HandleFunc("/list/boards", list.ListBoards)
-	r.HandleFunc("/list/board/details/{name}", list.ListBoards)
+	r.HandleFunc("/list/board/details/{name}", list.BoardDetails)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 

@@ -2,29 +2,48 @@
 {{template "navbar" .}}
 <div class="container">
     <div class="table-responsive">
+    <table class="table">
+        <caption>板信息</caption>
+        <thead>
+        <tr>
+            <th>服务名</th>
+            <th>板名</th>
+            <th>板类型</th>
+            <th>框--槽--CPU</th>
+            <th>版本</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{.Name}}</td>
+            <td>{{.BoardName}}</td>
+            <td>{{.Type}}</td>
+            <td>{{.Chassis}}--{{.Slot}}--{{.Cpu}}</td>
+            <td>{{.Image}}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div class="table-responsive">
         <table class="table">
-            <caption>所有的板子</caption>
+            <caption>接口信息</caption>
             <thead>
             <tr>
-                <th>工程名</th>
-                <th>板类型</th>
-                <th>框--槽--CPU</th>
-                <th>镜像版本</th>
-                <th>组网连线</th>
-                <th>串口</th>
+                <th>接口类型</th>
+                <th>接口名</th>
+                <th>对端板名</th>
+                <th>对端接口</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            {{range .}}
+            {{range .IfList}}
             <tr>
-                <td>{{.Name}}</td>
-                <td>{{.Type}}</td>
-                <td>{{.Chassis}}--{{.Slot}}--{{.Cpu}}</td>
-                <td>{{.Image}}</td>
-                <td><a href="/board/list/{{.BoardName}}">开始连线</a></td>
-                <td><a href="https://172.28.14.35:4200">连接</a></td>
-                <td><a href="/board/delete/{{.BoardName}}">删除</a></td>
+                <td>{{.IfType}}</td>
+                <td>{{.IfName}}</td>
+                <td>{{.PeerBoardName}}</td>
+                <td>{{.PeerIfName}}</td>
+                <td><a href="/network/connect/{{.BoardName}}">开始连线</a></td>
             </tr>
             {{end}}
             </tbody>
