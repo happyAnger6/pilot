@@ -13,6 +13,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func addBoardInterface(board *board.Board, ifter *board.BoardInterface) error {
+	board.BoardInterfaces = append(board.BoardInterfaces, ifter)
+	return nil
+}
+
 func parseBoard(params map[string][]string)(*board.Board, error) {
 	b := &board.Board{}
 	var chassis, slot, cpu string
@@ -35,10 +40,30 @@ func parseBoard(params map[string][]string)(*board.Board, error) {
 		case "bcpu":
 			cpu = v[0]
 			b.CpuNumber, _ = strconv.ParseInt(cpu, 10, 64)
+		case "ginter":
+			b.GInterfaceNum, _ = strconv.ParseInt(v[0], 10, 64)
+		case "tenginter":
+			b.TGInterfaceNum, _ = strconv.ParseInt(v[0], 10, 64)
 		}
 	}
 
-	b.BoardName = b.ProjName + chassis + slot + cpu
+	b.BoardName = b.ProjName + b.BoardType + chassis + slot + cpu
+	for i := 0; i < int(b.GInterfaceNum); i++ {
+		ifiter := &board.BoardInterface{
+			BoardName: b.BoardName,
+			IfType: board.GigabitEthernet,
+			IfName: board.GigabitEthernet + chassis + "/" + slot + "/" + strconv.Itoa(i+1),
+		}
+		addBoardInterface(b, ifiter)
+	}
+	for i := 0; i < int(b.TGInterfaceNum); i++ {
+		ifiter := &board.BoardInterface{
+			BoardName: b.BoardName,
+			IfType: board.TenGigabitEthernet,
+			IfName: board.TenGigabitEthernet + chassis + "/" + slot + "/" + strconv.Itoa(i+1),
+		}
+		addBoardInterface(b, ifiter)
+	}
 	return b, nil
 }
 

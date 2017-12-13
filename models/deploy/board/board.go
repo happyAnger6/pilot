@@ -18,6 +18,7 @@ type Board struct {
 	TGInterfaceNum int64
 	Image string
 	RunNode string
+	BoardInterfaces []*BoardInterface
 }
 
 // NewFromJSON creates an Image configuration from json.
