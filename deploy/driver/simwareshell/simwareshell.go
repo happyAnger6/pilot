@@ -3,7 +3,7 @@ package simwareshell
 import (
 	"pilot/deploy/driver"
 	"os/exec"
-	"github.com/logrus"
+	"github.com/Sirupsen/logrus"
 )
 
 const (
