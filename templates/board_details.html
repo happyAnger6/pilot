@@ -38,24 +38,24 @@
             </thead>
             <tbody>
             {{range .IfList}}
-            <tr>
-                <td>{{.IfType}}</td>
-                <td>{{.IfName}}</td>
-                {{with .PeerBoardName}}
-                <td>{{.PeerBoardName}}</td>
-                <td>{{.PeerIfName}}</td>
-                <td><a href="/network/disconnect/{{.BoardName}}">断开连接</a></td>
-                {{else}}
-                <td><select>
-                {{range .OtherBoards}}
-                <option>{{.BoardName}}</option>
-                {{end}}
-                </select></td>
-                <td></td>
-                    <td><button type="button" class="btn btn-default" onclick="connect('{{.IfType}}', '{{.IfName}}');">组网连线</button></td>
-                {{end}}
-                </tr>
-                {{end}}
+                <tr>
+                    <td>{{.IfType}}</td>
+                    <td>{{.IfName}}</td>
+                    {{with .PeerBoardName}}
+                        <td>{{.PeerBoardName}}</td>
+                        <td>{{.PeerIfName}}</td>
+                        <td><a href="/network/disconnect/{{.BoardName}}">断开连接</a></td>
+                    {{else}}
+                    <td><select>
+                        {{range .OtherBoards}}
+                        <option>{{.BoardName}}</option>
+                        {{end}}
+                    </select></td>
+                    <td></td>
+                        <td><button type="button" class="btn btn-default" onclick="connect('{{.IfType}}', '{{.IfName}}');">组网连线</button></td>
+                    {{end}}
+                    </tr>
+            {{end}}
                 </tbody>
             </table>
         </div>
