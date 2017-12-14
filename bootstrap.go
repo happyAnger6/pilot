@@ -9,10 +9,14 @@ import (
 
 	"pilot/controllers/deploy"
 	"pilot/controllers/list"
+	"pilot/session"
 )
 
 func Index(response http.ResponseWriter, request *http.Request) {
-
+	_, err := session.GetUserName(response, request)
+	if err != nil {
+		return
+	}
 	tmpl, err := template.ParseFiles("./templates/index.tpl","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {

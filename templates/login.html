@@ -1,0 +1,17 @@
+{{template "header" .}}
+<div class="container">
+ <h3>登陆</h3>
+ <form role="form" method="post" action="/login/registry">
+ <div class="form-group">
+     <div class="row">
+ <label for="username">用户名</label>
+   <span class="form-group-addon">*</span>
+   <input type="text" class="form-control" placeholder="eg.输入你的名字" name="username" id="username" aria-describedby="username">
+     </div>
+     <div class="row">
+ <button type="submit" class="btn btn-lg">登陆</button>
+     </div>
+ </div>
+ </form>
+</div> <!--/.div container -->
+{{template "footer" .}}
