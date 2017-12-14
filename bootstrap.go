@@ -31,7 +31,7 @@ func main() {
 
 	r.HandleFunc("/board/delete/{name}", deploy.DeleteBoard)
 
-	r.HandleFunc("/network/connect/{bname}/{ifname}", deploy.NetworkConnect)
+	r.HandleFunc("/network/connect", deploy.NetworkConnect)
 	r.HandleFunc("/network/disconnect/{name}", deploy.NetworkDisconnect)
 
 	r.HandleFunc("/list/boards", list.ListBoards)

@@ -25,7 +25,7 @@
     </table>
     </div>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="iftable">
             <caption>接口信息</caption>
             <thead>
             <tr>
@@ -48,7 +48,7 @@
                 {{else}}
                 <td></td>
                 <td></td>
-                <td><a href="/network/connect/{{.BoardName}}/{{.IfName}}">组网连线</a></td>
+                <td><input type="button" onclick="connect();"/>组网连线</td>
                 {{end}}
                 </tr>
                 {{end}}
@@ -56,4 +56,5 @@
             </table>
         </div>
     </div> <!--/.div container -->
+    {{template "bdetail" .}}
     {{template "footer" .}}

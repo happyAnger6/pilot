@@ -13,6 +13,7 @@ type BoardWalkFunc func(board *Board) error
 // Store is an interface for creating and accessing boards
 type BoardStore interface {
 	Store(name string, board *Board) error
+	Update(name string, board *Board) error
 	Get(name string) (*Board, error)
 	Walk(walkFunc BoardWalkFunc) error
 	Delete(name string) error
@@ -46,6 +47,7 @@ func (is *store) Walk(f BoardWalkFunc) error {
 
 	return nil
 }
+
 func (is *store) restore() error {
 	err := is.fs.Walk(func(name string) error {
 		board, err := is.Get(name)
@@ -123,6 +125,29 @@ func (is *store) Delete(name string) error {
 
 	delete(is.boards, name)
 	is.fs.Delete(name)
+
+	return nil
+}
+
+func (is *store) Update(name string, board *Board) error{
+	is.Lock()
+	defer is.Unlock()
+
+	if _, exists := is.boards[name]; exists {
+		delete(is.boards, name)
+		is.fs.Delete(name)
+	}
+
+	data, err := json.Marshal(*board)
+	if err != nil {
+		return err
+	}
+
+	err = is.fs.Set(name, data)
+	if err != nil {
+		return err
+	}
+	is.boards[name] = board
 
 	return nil
 }
