@@ -25,7 +25,7 @@ func GetUserName(w http.ResponseWriter, r *http.Request) (string, error) {
 
 	logrus.Debugf("get session:%v", session)
 	username := session.Values["username"]
-	if username == "" {
+	if username == nil {
 		logrus.Errorf("username emptysession")
 		tmpl, err := template.ParseFiles("./templates/login.html", "./templates/header.tpl",
 			"./templates/footer.tpl")
