@@ -75,7 +75,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		IfType string
 		PeerBoardName string
 		PeerIfName string
-		OtherBoard []*otherBoard
+		OtherBoard []otherBoard
 	}
 
 	type showBoard struct {
@@ -95,10 +95,10 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	otherBoards := []*otherBoard{}
+	otherBoards := []otherBoard{}
 	err = d.BoardStore.Walk(func(bd *board.Board) error {
 		if bd.BoardName != brd.BoardName {
-			otherBoards = append(otherBoards, &otherBoard{
+			otherBoards = append(otherBoards, otherBoard{
 				BoardName: bd.BoardName,
 			})
 		}
