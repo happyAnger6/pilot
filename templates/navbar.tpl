@@ -11,21 +11,19 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Pilot容器管理平台alpha版</a>
+            <a class="navbar-brand" href="/">Pilot容器管理平台alpha版</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="/">主 页</a></li>
-              <li><a href="/list/boards">板　子</a></li>
-              <li><a href="/hosts">主 机</a></li>
+              <!-- <li><a href="/list/boards"></a></li>
+              <li><a href="/hosts">主 机</a></li> -->
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">部署simware <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">simware <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li>创建模板</li>
-                  <li><a href="/deploy/startBoard">启动板子</a></li>
+                  <!-- <li>创建模板</li> -->
+                  <li><a href="/deploy/startBoard">部署</a></li>
                   <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">组网相关</li>
-                  <li>连线</li>
+                  <li><a href="/list/boards"></a>查看</li>
                 </ul>
               </li>
             </ul>
