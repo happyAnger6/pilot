@@ -29,9 +29,10 @@
       <script src="/js/respond.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-        function connect(){
+        function connect(iftype, ifname){
             var tab = document.getElementById("iftable");
             var rows = tab.rows.length;
+            alert("iftype: " + iftype + " ifname: " + ifname);
             alert("行数:" + rows);
         }
     </script>
