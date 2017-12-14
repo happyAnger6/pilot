@@ -75,7 +75,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		IfType string
 		PeerBoardName string
 		PeerIfName string
-		OtherBoard []otherBoard
+		OtherBoards []otherBoard
 	}
 
 	type showBoard struct {
@@ -123,7 +123,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 			IfType: ifinter.IfType,
 			PeerBoardName: peerName,
 			PeerIfName: peerBoard,
-			OtherBoard: otherBoards,
+			OtherBoards: otherBoards,
 		}
 		iflists = append(iflists, ifl)
 	}
