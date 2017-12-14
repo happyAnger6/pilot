@@ -41,19 +41,19 @@
             <tr>
                 <td>{{.IfType}}</td>
                 <td>{{.IfName}}</td>
-		{{with .PeerBoardName}}
+                {{with .PeerBoardName}}
                 <td>{{.PeerBoardName}}</td>
-                <td>{{.PeerIfName}}</td> 
-		<td><a href="/network/connect">断开连接</a></td>
-		{{else}}
+                <td>{{.PeerIfName}}</td>
+                <td><a href="/network/disconnect/{{.BoardName}}">断开连接</a></td>
+                {{else}}
                 <td></td>
-                <td></td> 
-		<td><a href="/network/connect">组网连线</a></td>
-		{{end}}
-            </tr>
-            {{end}}
-            </tbody>
-        </table>
-    </div>
-</div> <!--/.div container -->
-{{template "footer" .}}
+                <td></td>
+                <td><a href="/network/connect/{{.BoardName}}/{{.IfName}}">组网连线</a></td>
+                {{end}}
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div> <!--/.div container -->
+    {{template "footer" .}}

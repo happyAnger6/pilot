@@ -67,6 +67,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 	}
 
 	type ifList struct {
+		BoardName string
 		IfName string
 		IfType string
 		PeerBoardName string
@@ -98,6 +99,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 			peerBoard = ifinter.Endpoint.BoardName
 		}
 		ifl := ifList{
+			BoardName: brd.BoardName,
 			IfName: ifinter.IfName,
 			IfType: ifinter.IfType,
 			PeerBoardName: peerName,
