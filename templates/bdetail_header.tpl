@@ -1,4 +1,4 @@
-{{define "header"}}
+{{define "bdetail_header"}}
 <!DOCTYPE html>
 <html lang="en">
   <head>

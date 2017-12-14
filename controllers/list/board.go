@@ -120,8 +120,8 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 	}
 
 	log.Debugf("board detail:%v", sb)
-	tmpl, err := template.ParseFiles("./templates/board_details.html", "./templates/header.tpl",
-		"./templates/navbar.tpl", "./templates/bdetail.tpl", "./templates/footer.tpl")
+	tmpl, err := template.ParseFiles("./templates/board_details.html", "./templates/bdetail_header.tpl",
+		"./templates/navbar.tpl", "./templates/footer.tpl")
 	if err != nil {
 		log.Errorf("Error happened:%v", err)
 		return
