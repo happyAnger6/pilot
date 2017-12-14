@@ -126,6 +126,13 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		log.Errorf("Error happened:%v", err)
 		return
 	}
-
+	funcMap := template.FuncMap{
+		"otherIfs": otherIfs,
+	}
+	tmpl.Funcs(funcMap)
 	tmpl.Execute(response, sb)
+}
+
+func otherIfs() (string, error) {
+	return "aaaaa", nil
 }
