@@ -23,7 +23,7 @@
                   <!-- <li>创建模板</li> -->
                   <li><a href="/deploy/startBoard">部署</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="/list/boards"></a>查看</li>
+                  <li><a href="/list/boards">查看</a></li>
                 </ul>
               </li>
             </ul>
