@@ -46,11 +46,11 @@
                 <td>{{.PeerIfName}}</td>
                 <td><a href="/network/disconnect/{{.BoardName}}">断开连接</a></td>
                 {{else}}
-                <td><ul class="dropdown-menu" aria-labelledby="dropdownothers">
+                <td><select>
                 {{range .OtherBoards}}
-                <li>{{.BoardName}}</li>
+                <option>{{.BoardName}}</option>
                 {{end}}
-                </ul></td>
+                </select></td>
                 <td></td>
                     <td><button type="button" class="btn btn-default" onclick="connect('{{.IfType}}', '{{.IfName}}');">组网连线</button></td>
                 {{end}}
