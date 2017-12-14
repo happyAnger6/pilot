@@ -28,6 +28,13 @@
       <script src="/js/html5shiv.min.js"></script>
       <script src="/js/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        function connect(){
+            var tab = document.getElementById("iftable");
+            var rows = tab.rows.length;
+            alert("行数:" + rows);
+        }
+    </script>
   </head>
   <body>
 {{end}}
