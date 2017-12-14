@@ -66,13 +66,18 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	type otherBoard struct {
+		BoardName string
+	}
 	type ifList struct {
 		BoardName string
 		IfName string
 		IfType string
 		PeerBoardName string
 		PeerIfName string
+		OtherBoard []*otherBoard
 	}
+
 	type showBoard struct {
 		Name      string
 		BoardName string
@@ -90,6 +95,20 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	otherBoards := []*otherBoard{}
+	err = d.BoardStore.Walk(func(bd *board.Board) error {
+		if bd.BoardName != brd.BoardName {
+			otherBoards = append(otherBoards, &otherBoard{
+				BoardName: bd.BoardName,
+			})
+		}
+		return nil
+	})
+
+	if err != nil {
+		log.Errorf("Walk error:%v", err)
+		return
+	}
 	iflists := []ifList{}
 	for _, ifinter := range brd.BoardInterfaces {
 		peerName := ""
@@ -104,6 +123,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 			IfType: ifinter.IfType,
 			PeerBoardName: peerName,
 			PeerIfName: peerBoard,
+			OtherBoard: otherBoards,
 		}
 		iflists = append(iflists, ifl)
 	}
