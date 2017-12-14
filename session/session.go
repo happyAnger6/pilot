@@ -24,8 +24,19 @@ func GetUserName(w http.ResponseWriter, r *http.Request) (string, error) {
 	}
 
 	logrus.Debugf("get session:%v", session)
-	username := session.Values["username"].(string)
-	return username, nil
+	username := session.Values["username"]
+	if username == "" {
+		logrus.Errorf("username emptysession")
+		tmpl, err := template.ParseFiles("./templates/login.html", "./templates/header.tpl",
+			"./templates/footer.tpl")
+		if err != nil {
+			logrus.Errorf("Error happened:%v",err)
+			return "", err
+		}
+		tmpl.Execute(w, nil)
+
+	}
+	return username.(string), nil
 }
 
 func SetUserName(name string, w http.ResponseWriter, r *http.Request) error {
