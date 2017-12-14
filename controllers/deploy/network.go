@@ -9,7 +9,7 @@ import (
 )
 
 func NetworkConnect(response http.ResponseWriter, request *http.Request) {
-	bname := mux.Vars(request)["name"]
+	bname := mux.Vars(request)["bname"]
 	ifname := mux.Vars(request)["ifname"]
 
 	logrus.Debugf("Network connect board name:%s ifname:%s", bname, ifname)
