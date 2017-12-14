@@ -5,7 +5,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"pilot/daemon"
-	"pilot/models/deploy/board"
+	_ "pilot/models/deploy/board"
 	"github.com/gorilla/websocket"
 )
 
