@@ -97,8 +97,12 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 			return
 		}
 
+		username := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
+		bd.BoardName = username + bd.BoardName
+
 		log.Debugf("board:%v\r\n", bd)
 		d.BoardStore.Store(bd.BoardName, bd)
+		opts.CreateOpts["username"] = username
 		err = d.StartContainer(bd.BoardName, opts)
 		if err != nil {
 			log.Errorf("start Container failed:%v\r\n", err)

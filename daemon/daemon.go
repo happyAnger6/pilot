@@ -13,6 +13,7 @@ import (
 	"pilot/users"
 	"pilot/users/driver/simwareshelluser"
 	"github.com/sirupsen/logrus"
+	"pilot/models/deploy"
 )
 
 const (
@@ -49,7 +50,7 @@ func initialize()(*Daemon, error) {
 	userDriver, err := simwareshelluser.Init(); if err != nil {
 		return nil, err
 	}
-
+/*
 	boardRoot := filepath.Join(storerootdir, "board")
 	bfs, err := models.NewFSStoreBackend(boardRoot)
 	if err != nil {
@@ -59,7 +60,9 @@ func initialize()(*Daemon, error) {
 	bs, err := board.NewBoardStore(bfs)
 	if err != nil {
 		return nil, err
-	}
+	}*/
+
+	bs, err := deploy.NewBoardStore()
 
 	daemon = &Daemon{mux: sync.Mutex{}, Driver: driver,
 				 UserManagerDriver: userDriver, BoardStore: bs}
