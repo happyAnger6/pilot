@@ -7,6 +7,8 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"pilot/session"
+	"pilot/daemon"
+	"github.com/gorilla/context"
 )
 
 func Registry(response http.ResponseWriter, request *http.Request) {
@@ -24,6 +26,18 @@ func Registry(response http.ResponseWriter, request *http.Request) {
 				}
 			}
 		}
+	}
+	d, err := daemon.GetInstance(); if err != nil {
+		logrus.Errorf("Daemon getinstance failed :%v", err)
+		fmt.Fprintf(response, "%v", err)
+		return
+	}
+
+	username := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
+	err = d.UserManagerDriver.AddUser(username); if err != nil {
+		logrus.Errorf("AddUser:%s failed :%v", username, err)
+		fmt.Fprintf(response, "%v", err)
+		return
 	}
 	session.HomePage(response, request)
 }

@@ -1,6 +1,9 @@
 package simwareshelluser
 
-import "pilot/users"
+import (
+	"pilot/users"
+	"github.com/Sirupsen/logrus"
+)
 
 const (
 	drivername = "simwareshelluser"
@@ -19,6 +22,7 @@ func (d *Driver) String() string {
 }
 
 func (d *Driver) AddUser(name string) error {
+	logrus.Debugf("Add user :%s ", name)
 	return nil
 }
 
