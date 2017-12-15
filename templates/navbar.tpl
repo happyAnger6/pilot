@@ -26,6 +26,7 @@
                   <li><a href="/list/boards">查看</a></li>
                 </ul>
               </li>
+              <li>你好! {{.UserName}}</li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

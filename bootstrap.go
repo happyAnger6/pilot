@@ -14,17 +14,21 @@ import (
 )
 
 func Index(response http.ResponseWriter, request *http.Request) {
-	_, err := session.GetUserName(response, request)
+	username, err := session.GetUserName(response, request)
 	if err != nil {
 		return
 	}
+	type loginfo struct {
+		UserName string
+	}
+	linfo := loginfo{UserName: username}
 	tmpl, err := template.ParseFiles("./templates/index.tpl","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {
 		log.Errorf("Error happened:%v",err)
 		return
 	}
-	tmpl.Execute(response, nil)
+	tmpl.Execute(response, linfo)
 }
 
 func main() {
