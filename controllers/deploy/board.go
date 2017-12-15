@@ -106,7 +106,7 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 			log.Errorf("start Container failed:%v\r\n", err)
 		}
 	}
-	tmpl, err := template.ParseFiles("./templates/start_board.html","./templates/header.tpl",
+	tmpl, err := template.ParseFiles("./templates/start_board.html","./templates/start_board_header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {
 		log.Errorf("Error happened:%v", err)

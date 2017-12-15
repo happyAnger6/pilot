@@ -152,7 +152,10 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		log.Errorf("Error happened:%v", err)
 		return
 	}
-	tmpl.Execute(response, sb)
+	err = tmpl.Execute(response, sb)
+	if err != nil {
+		log.Errorf("execute error:%v ", err)
+	}
 }
 
 func otherIfs() (string, error) {
