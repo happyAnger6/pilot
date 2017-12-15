@@ -28,7 +28,7 @@
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-            <li>{{.UserName}}</li>
+            <li><a>你　好 !  {{.UserName}}</a></li>
             <li><a href="/logout">退出登陆</a></li>
             </ul>
           </div><!--/.nav-collapse -->

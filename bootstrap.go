@@ -36,6 +36,7 @@ func main() {
 	r.HandleFunc("/", Index)
 
 	r.HandleFunc("/login/registry", login.Registry)
+	r.HandleFunc("/logout", login.Logout)
 
 	r.HandleFunc("/deploy/createTemplate", deploy.CreateTemplate)
 	r.HandleFunc("/deploy/startBoard", deploy.StartBoard)
