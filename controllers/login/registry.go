@@ -2,7 +2,7 @@ package login
 
 import (
 	"fmt"
-	"github.com/logrus"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"pilot/session"
 )
