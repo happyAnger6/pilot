@@ -25,4 +25,5 @@ func Registry(response http.ResponseWriter, request *http.Request) {
 			}
 		}
 	}
+	session.HomePage(response, request)
 }

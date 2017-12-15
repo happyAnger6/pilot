@@ -15,6 +15,25 @@ const (
 
 var store = sessions.NewCookieStore([]byte(SERCRET))
 
+func HomePage(response http.ResponseWriter, request *http.Request) {
+	username, err := GetUserName(response, request)
+	if err != nil {
+		return
+	}
+	type loginfo struct {
+		UserName string
+	}
+	linfo := loginfo{UserName: username}
+	tmpl, err := template.ParseFiles("./templates/index.tpl","./templates/header.tpl",
+		"./templates/navbar.tpl","./templates/footer.tpl")
+	if err != nil {
+		logrus.Errorf("Error happened:%v",err)
+		return
+	}
+	tmpl.Execute(response, linfo)
+}
+
+
 func LoginFailed(w http.ResponseWriter) error {
 	tmpl, err := template.ParseFiles("./templates/login.html", "./templates/header.tpl",
 		"./templates/footer.tpl")
