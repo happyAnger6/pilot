@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"github.com/sirupsen/logrus"
 	"html/template"
+	"fmt"
 )
 
 var store = sessions.NewCookieStore([]byte("cloudware0.1"))
@@ -26,7 +27,7 @@ func GetUserName(w http.ResponseWriter, r *http.Request) (string, error) {
 	logrus.Debugf("get session:%v", session)
 	username := session.Values["username"]
 	if username == nil {
-		logrus.Errorf("username emptysession")
+		logrus.Errorf("username empty session")
 		tmpl, err := template.ParseFiles("./templates/login.html", "./templates/header.tpl",
 			"./templates/footer.tpl")
 		if err != nil {
@@ -34,6 +35,7 @@ func GetUserName(w http.ResponseWriter, r *http.Request) (string, error) {
 			return "", err
 		}
 		tmpl.Execute(w, nil)
+		return "", fmt.Errorf("invalid user")
 
 	}
 	return username.(string), nil
