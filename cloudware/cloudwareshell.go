@@ -20,8 +20,8 @@ func (*driver) String() string {
 }
 
 func (*driver) AddUser(userName string) error {
-	exec.Command("cloudware", "init")
-	return nil
+	cmd := exec.Command("cloudware", "init")
+	return cmd.Run()
 }
 
 func (*driver) DelUser(userName string) error {
