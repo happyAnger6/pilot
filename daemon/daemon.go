@@ -14,6 +14,7 @@ import (
 	"pilot/users/driver/simwareshelluser"
 	"github.com/sirupsen/logrus"
 	"pilot/models/deploy"
+	"pilot/cloudware"
 )
 
 const (
@@ -25,6 +26,7 @@ type Daemon struct {
 	driver.Driver
 	users.UserManagerDriver
 	BoardStore board.BoardStore
+	CloudwareDriver cloudware.Driver
 }
 
 var daemon *Daemon
@@ -64,7 +66,11 @@ func initialize()(*Daemon, error) {
 
 	bs, err := deploy.NewBoardStore()
 
+	cloudDriver, err := cloudware.Init(); if err != nil {
+		return nil, err
+	}
 	daemon = &Daemon{mux: sync.Mutex{}, Driver: driver,
-				 UserManagerDriver: userDriver, BoardStore: bs}
+				 UserManagerDriver: userDriver, BoardStore: bs,
+				 CloudwareDriver: cloudDriver}
 	return daemon, nil
 }

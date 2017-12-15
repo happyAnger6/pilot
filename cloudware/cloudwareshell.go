@@ -10,7 +10,6 @@ type driver struct {
 
 }
 
-
 func Init()(Driver, error) {
 	return &driver{}, nil
 }
