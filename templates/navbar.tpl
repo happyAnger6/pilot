@@ -26,9 +26,11 @@
                   <li><a href="/list/boards">查看</a></li>
                 </ul>
               </li>
-              <li>你好! {{.UserName}}</li>
             </ul>
           </div><!--/.nav-collapse -->
+          <div class="navbar-header">
+          你　好,  {{.UserName}}
+          </div>
         </div><!--/.container-fluid -->
       </nav>
 
