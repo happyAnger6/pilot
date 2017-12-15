@@ -11,9 +11,15 @@ import (
 	"strconv"
 	"github.com/gorilla/mux"
 	"pilot/session"
+	"golang.org/x/net/html/atom"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
+	username, err := session.GetUserName(response, request)
+	if err != nil {
+		return
+	}
+
 	d, err := daemon.GetInstance(); if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
 		return
@@ -27,6 +33,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		Slot string
 		Cpu string
 		Image string
+		UserName string
 	}
 	showBoards := []showBoard{}
 	err = d.BoardStore.Walk(func(b *board.Board) error {
@@ -38,6 +45,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 			Slot: strconv.FormatInt(b.SlotNumber, 10),
 			Cpu: strconv.FormatInt(b.CpuNumber, 10),
 			Image: b.Image,
+			UserName: username,
 		}
 		log.Debugf("append board:%v b:%v", brd, b)
 		showBoards = append(showBoards, brd)
@@ -55,7 +63,9 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	tmpl.Execute(response, showBoards)
+	err = tmpl.Execute(response, showBoards); if err != nil {
+		log.Errorf("execute error :%v", err)
+	}
 }
 
 func BoardDetails(response http.ResponseWriter, request *http.Request) {
