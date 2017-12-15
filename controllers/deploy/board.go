@@ -12,9 +12,12 @@ import (
 	"pilot/models/deploy/board"
 	"github.com/gorilla/mux"
 	"pilot/session"
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
+type loginfo struct {
+	UserName string
+}
 func addBoardInterface(board *board.Board, ifter *board.BoardInterface) error {
 	board.BoardInterfaces = append(board.BoardInterfaces, ifter)
 	return nil
@@ -110,9 +113,6 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	type loginfo struct {
-		UserName string
-	}
 	linfo := loginfo{
 		UserName: username,
 	}
@@ -123,6 +123,10 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 	name := mux.Vars(request)["name"]
 	log.Debugf("DeleteBoard name:%v",  name)
+	username, err := session.GetUserName(response, request)
+	if err != nil {
+		return
+	}
 
 	d, err := daemon.GetInstance(); if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
@@ -142,5 +146,8 @@ func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	tmpl.Execute(response, nil)
+	linfo := loginfo{
+		UserName: username,
+	}
+	tmpl.Execute(response, linfo)
 }
