@@ -11,16 +11,15 @@ import (
 	"pilot/controllers/list"
 	"pilot/session"
 	"pilot/controllers/login"
+	"pilot/middlewares"
+	"github.com/gorilla/context"
 )
 
 func Index(response http.ResponseWriter, request *http.Request) {
-	username, err := session.GetUserName(response, request)
-	if err != nil {
-		return
-	}
 	type loginfo struct {
 		UserName string
 	}
+	username := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
 	linfo := loginfo{UserName: username}
 	tmpl, err := template.ParseFiles("./templates/index.tpl","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
@@ -33,21 +32,21 @@ func Index(response http.ResponseWriter, request *http.Request) {
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", Index)
+	r.HandleFunc("/", middlewares.CheckLogin(Index))
 
 	r.HandleFunc("/login/registry", login.Registry)
 	r.HandleFunc("/logout", login.Logout)
 
-	r.HandleFunc("/deploy/createTemplate", deploy.CreateTemplate)
-	r.HandleFunc("/deploy/startBoard", deploy.StartBoard)
+	r.HandleFunc("/deploy/createTemplate", middlewares.CheckLogin(deploy.CreateTemplate))
+	r.HandleFunc("/deploy/startBoard", middlewares.CheckLogin(deploy.StartBoard))
 
-	r.HandleFunc("/board/delete/{name}", deploy.DeleteBoard)
+	r.HandleFunc("/board/delete/{name}", middlewares.CheckLogin(deploy.DeleteBoard))
 
-	r.HandleFunc("/network/connect", deploy.NetworkConnect)
-	r.HandleFunc("/network/disconnect/{name}", deploy.NetworkDisconnect)
+	r.HandleFunc("/network/connect", middlewares.CheckLogin(deploy.NetworkConnect))
+	r.HandleFunc("/network/disconnect/{name}", middlewares.CheckLogin(deploy.NetworkDisconnect))
 
-	r.HandleFunc("/list/boards", list.ListBoards)
-	r.HandleFunc("/list/board/details/{name}", list.BoardDetails)
+	r.HandleFunc("/list/boards", middlewares.CheckLogin(list.ListBoards))
+	r.HandleFunc("/list/board/details/{name}", middlewares.CheckLogin(list.BoardDetails))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 

@@ -11,15 +11,12 @@ import (
 const (
 	SERCRET="cloudware0.1"
 	SESSION_KEY="cloudware"
+	CLOUDWARE_USER_KEY="cloudware_user"
 )
 
 var store = sessions.NewCookieStore([]byte(SERCRET))
 
 func HomePage(response http.ResponseWriter, request *http.Request) {
-	username, err := GetUserName(response, request)
-	if err != nil {
-		return
-	}
 	type loginfo struct {
 		UserName string
 	}

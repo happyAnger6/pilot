@@ -13,6 +13,7 @@ import (
 	"github.com/gorilla/mux"
 	"pilot/session"
 	"github.com/sirupsen/logrus"
+	"github.com/gorilla/context"
 )
 
 type loginfo struct {
@@ -76,11 +77,6 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 	method := request.Method
 	log.Debugf("Method:%v", method)
 
-	username, err := session.GetUserName(response, request)
-	if err != nil {
-		return
-	}
-
 	if method == "POST" {
 		request.ParseForm()
 		opts := &driver.ContainerOpts{}
@@ -116,7 +112,7 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 	}
 
 	linfo := loginfo{
-		UserName: username,
+		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
 	}
 	err = tmpl.Execute(response, linfo)
 	logrus.Debugf("Execute err:%v", err)
@@ -125,10 +121,6 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 	name := mux.Vars(request)["name"]
 	log.Debugf("DeleteBoard name:%v",  name)
-	username, err := session.GetUserName(response, request)
-	if err != nil {
-		return
-	}
 
 	d, err := daemon.GetInstance(); if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
@@ -149,7 +141,7 @@ func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 	}
 
 	linfo := loginfo{
-		UserName: username,
+		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
 	}
 	tmpl.Execute(response, linfo)
 }

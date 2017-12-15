@@ -11,13 +11,10 @@ import (
 	"strconv"
 	"github.com/gorilla/mux"
 	"pilot/session"
+	"github.com/gorilla/context"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
-	username, err := session.GetUserName(response, request)
-	if err != nil {
-		return
-	}
 
 	d, err := daemon.GetInstance(); if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
@@ -65,7 +62,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		ShowBoards []showBoard
 	}
 	linfo := listInfo{
-		UserName: username,
+		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
 		ShowBoards: showBoards,
 	}
 	err = tmpl.Execute(response, linfo); if err != nil {
@@ -75,10 +72,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 
 func BoardDetails(response http.ResponseWriter, request *http.Request) {
 	boardName := mux.Vars(request)["name"]
-	username, err := session.GetUserName(response, request)
-	if err != nil {
-		return
-	}
+
 	d, err := daemon.GetInstance();
 	if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
@@ -157,7 +151,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		Cpu: strconv.FormatInt(brd.CpuNumber, 10),
 		Image: brd.Image,
 		IfList: iflists,
-		UserName: username,
+		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
 	}
 
 	log.Debugf("board detail:%v", sb)
