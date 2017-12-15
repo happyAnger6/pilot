@@ -1,11 +1,13 @@
 package session
 
 import (
-	"github.com/gorilla/sessions"
 	"net/http"
-	"github.com/sirupsen/logrus"
 	"html/template"
 	"fmt"
+
+	"github.com/gorilla/sessions"
+	"github.com/sirupsen/logrus"
+	"github.com/gorilla/context"
 )
 
 const (
@@ -20,7 +22,7 @@ func HomePage(response http.ResponseWriter, request *http.Request) {
 	type loginfo struct {
 		UserName string
 	}
-	linfo := loginfo{UserName: username}
+	linfo := loginfo{UserName: context.Get(request, CLOUDWARE_USER_KEY).(string)}
 	tmpl, err := template.ParseFiles("./templates/index.tpl","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {

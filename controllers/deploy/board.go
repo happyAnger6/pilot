@@ -53,7 +53,7 @@ func parseBoard(params map[string][]string)(*board.Board, error) {
 		}
 	}
 
-	b.BoardName = b.ProjName + b.BoardType + chassis + slot + cpu
+	b.BoardName = b.ProjName + "-" + b.BoardType + "-" + chassis + slot + cpu
 	for i := 0; i < int(b.GInterfaceNum); i++ {
 		ifiter := &board.BoardInterface{
 			BoardName: b.BoardName,
