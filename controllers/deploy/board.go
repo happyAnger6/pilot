@@ -19,6 +19,7 @@ import (
 type loginfo struct {
 	UserName string
 }
+
 func addBoardInterface(board *board.Board, ifter *board.BoardInterface) error {
 	board.BoardInterfaces = append(board.BoardInterfaces, ifter)
 	return nil
