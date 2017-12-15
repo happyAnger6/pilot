@@ -10,6 +10,9 @@ import (
 	"pilot/models"
 	 "pilot/deploy/driver/stub"
 	_ "pilot/deploy/driver/simwareshell"
+	"pilot/users"
+	"pilot/users/driver/simwareshelluser"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -19,6 +22,7 @@ const (
 type Daemon struct {
 	mux sync.Mutex
 	driver.Driver
+	users.UserManagerDriver
 	BoardStore board.BoardStore
 }
 
@@ -37,7 +41,12 @@ func GetInstance() (*Daemon, error) {
 }
 
 func initialize()(*Daemon, error) {
+	logrus.Debugf("Daemon initizlie")
 	driver, err := stub.Init(); if err != nil {
+		return nil, err
+	}
+
+	userDriver, err := simwareshelluser.Init(); if err != nil {
 		return nil, err
 	}
 
@@ -53,6 +62,6 @@ func initialize()(*Daemon, error) {
 	}
 
 	daemon = &Daemon{mux: sync.Mutex{}, Driver: driver,
-				BoardStore: bs}
+				 UserManagerDriver: userDriver, BoardStore: bs}
 	return daemon, nil
 }

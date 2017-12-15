@@ -75,10 +75,12 @@ func parseBoard(params map[string][]string)(*board.Board, error) {
 func StartBoard(response http.ResponseWriter, request *http.Request) {
 	method := request.Method
 	log.Debugf("Method:%v", method)
+
 	username, err := session.GetUserName(response, request)
 	if err != nil {
 		return
 	}
+
 	if method == "POST" {
 		request.ParseForm()
 		opts := &driver.ContainerOpts{}
