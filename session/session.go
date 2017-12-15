@@ -76,5 +76,6 @@ func SetUserName(name string, w http.ResponseWriter, r *http.Request) error {
 
 	session.Values["username"] = name
 	session.Save(r, w)
+	context.Set(r, CLOUDWARE_USER_KEY, name)
 	return nil
 }
