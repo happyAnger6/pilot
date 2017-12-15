@@ -10,6 +10,7 @@ import (
 	"pilot/models/deploy/board"
 	"strconv"
 	"github.com/gorilla/mux"
+	"pilot/session"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
@@ -59,7 +60,10 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 
 func BoardDetails(response http.ResponseWriter, request *http.Request) {
 	boardName := mux.Vars(request)["name"]
-
+	username, err := session.GetUserName(response, request)
+	if err != nil {
+		return
+	}
 	d, err := daemon.GetInstance();
 	if err != nil {
 		log.Errorf("Daemon GetInstance err:%v", err)
@@ -87,6 +91,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		Cpu       string
 		Image     string
 		IfList    []ifList
+		UserName  string
 	}
 
 	brd, err := d.BoardStore.Get(boardName)
@@ -137,6 +142,7 @@ func BoardDetails(response http.ResponseWriter, request *http.Request) {
 		Cpu: strconv.FormatInt(brd.CpuNumber, 10),
 		Image: brd.Image,
 		IfList: iflists,
+		UserName: username,
 	}
 
 	log.Debugf("board detail:%v", sb)
