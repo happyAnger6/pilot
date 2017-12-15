@@ -2,7 +2,7 @@ package simwareshelluser
 
 import (
 	"pilot/users"
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 const (
