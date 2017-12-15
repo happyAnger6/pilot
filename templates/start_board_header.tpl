@@ -1,4 +1,4 @@
-{{define "headscript"}}
+{{define "start_board_header"}}
 <script type="text/javascript">
     function connect(){
         var tab = document.getElementById("iftable");
