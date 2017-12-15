@@ -12,6 +12,7 @@ import (
 	"pilot/models/deploy/board"
 	"github.com/gorilla/mux"
 	"pilot/session"
+	"github.com/Sirupsen/logrus"
 )
 
 func addBoardInterface(board *board.Board, ifter *board.BoardInterface) error {
@@ -115,7 +116,8 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 	linfo := loginfo{
 		UserName: username,
 	}
-	tmpl.Execute(response, linfo)
+	err = tmpl.Execute(response, linfo)
+	logrus.Debugf("Execute err:%v", err)
 }
 
 func DeleteBoard(response http.ResponseWriter, request *http.Request) {
