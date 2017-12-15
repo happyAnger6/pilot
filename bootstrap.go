@@ -10,6 +10,7 @@ import (
 	"pilot/controllers/deploy"
 	"pilot/controllers/list"
 	"pilot/session"
+	"pilot/controllers/login"
 )
 
 func Index(response http.ResponseWriter, request *http.Request) {
@@ -29,6 +30,8 @@ func Index(response http.ResponseWriter, request *http.Request) {
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", Index)
+
+	r.HandleFunc("/login/registry", login.Registry)
 
 	r.HandleFunc("/deploy/createTemplate", deploy.CreateTemplate)
 	r.HandleFunc("/deploy/startBoard", deploy.StartBoard)
