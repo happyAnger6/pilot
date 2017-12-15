@@ -32,7 +32,6 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		Slot string
 		Cpu string
 		Image string
-		UserName string
 	}
 	showBoards := []showBoard{}
 	err = d.BoardStore.Walk(func(b *board.Board) error {
@@ -44,7 +43,6 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 			Slot: strconv.FormatInt(b.SlotNumber, 10),
 			Cpu: strconv.FormatInt(b.CpuNumber, 10),
 			Image: b.Image,
-			UserName: username,
 		}
 		log.Debugf("append board:%v b:%v", brd, b)
 		showBoards = append(showBoards, brd)
@@ -62,7 +60,15 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	err = tmpl.Execute(response, showBoards); if err != nil {
+	type listInfo struct{
+		UserName string
+		ShowBoards []showBoard
+	}
+	linfo := listInfo{
+		UserName: username,
+		ShowBoards: showBoards,
+	}
+	err = tmpl.Execute(response, linfo); if err != nil {
 		log.Errorf("execute error :%v", err)
 	}
 }
