@@ -11,7 +11,6 @@ import (
 	"strconv"
 	"github.com/gorilla/mux"
 	"pilot/session"
-	"golang.org/x/net/html/atom"
 )
 
 func ListBoards(response http.ResponseWriter, request *http.Request) {
