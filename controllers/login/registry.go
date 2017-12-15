@@ -13,11 +13,12 @@ import (
 
 func Registry(response http.ResponseWriter, request *http.Request) {
 	method := request.Method
+	var username string
 	if method == "POST" {
 		request.ParseForm()
 		for k, v := range request.Form {
 			if k == "username" {
-				username := v[0]
+				username = v[0]
 				logrus.Debugf("Get username:%s", username)
 				err := session.SetUserName(username, response, request)
 				if err != nil {
@@ -33,7 +34,6 @@ func Registry(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	username := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
 	err = d.UserManagerDriver.AddUser(username); if err != nil {
 		logrus.Errorf("AddUser:%s failed :%v", username, err)
 		fmt.Fprintf(response, "%v", err)
