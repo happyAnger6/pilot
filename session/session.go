@@ -35,7 +35,7 @@ func HomePage(response http.ResponseWriter, request *http.Request) {
 
 func LoginFailed(w http.ResponseWriter) error {
 	tmpl, err := template.ParseFiles("./templates/login.html", "./templates/header.tpl",
-		"./templates/footer.tpl")
+		"./templates/footer.tpl", "./templates/login_header.tpl")
 	if err != nil {
 		logrus.Errorf("login failed! :%v", err)
 	}
