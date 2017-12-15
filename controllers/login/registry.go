@@ -8,7 +8,6 @@ import (
 
 	"pilot/session"
 	"pilot/daemon"
-	"github.com/gorilla/context"
 )
 
 func Registry(response http.ResponseWriter, request *http.Request) {
