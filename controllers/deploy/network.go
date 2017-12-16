@@ -157,8 +157,11 @@ func NetworkConnectDevice(response http.ResponseWriter, request *http.Request) {
 
 func NetworkDisconnectDevice(response http.ResponseWriter, request *http.Request) {
 	devName := mux.Vars(request)["devName"]
-	devPort := mux.Vars(request)["devPort"]
+	devPort1 := mux.Vars(request)["devPort1"]
+	devPort2 := mux.Vars(request)["devPort2"]
+	devPort3 := mux.Vars(request)["devPort3"]
 
+	devPort := devPort1 + "/" + devPort2 + "/" + devPort3
 	method := request.Method
 	logrus.Debugf("network disconnect method:%v", method)
 
