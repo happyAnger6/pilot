@@ -6,8 +6,6 @@ import (
 	"pilot/deploy/driver"
 	_ "pilot/deploy/driver/k8s"
 	"pilot/models/deploy/board"
-	"path/filepath"
-	"pilot/models"
 	 "pilot/deploy/driver/stub"
 	_ "pilot/deploy/driver/simwareshell"
 	"pilot/users"
