@@ -45,6 +45,21 @@ func (*driver) AddUser(userName string) error {
 	return nil
 }
 
+func (*driver) AddConnection(userName, devName, devPort, PeerName, PeerPort string) error {
+	cmd := exec.Command(cloudwarecmd,  userName, "connect", devName, devPort, "to", PeerName, PeerPort)
+	cmd.Stdin = strings.NewReader(userName)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run();
+	if err != nil {
+		logrus.Errorf("cloudware user:%s Add connection:%s-%s to %s-%s failed:%v", userName,
+			devName, devPort, PeerName, PeerPort, err)
+		return err
+	}
+	logrus.Debugf("cloudware add connection ret:%q", out.String())
+	return nil
+}
+
 func (*driver) DelUser(userName string) error {
 	return nil
 }
@@ -130,6 +145,41 @@ func (*driver) ListDevices(userName string) (*DeviceList, error) {
 	return &DeviceList{Items: allDevices}, nil
 }
 
+func (*driver) ListConnections(userName, devName string) (*ConnectionInfoList, error) {
+	cmd := exec.Command(cloudwarecmd, userName, "list", "connection")
+	logrus.Debugf("cmd: %v", cmd)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run(); if err != nil {
+		logrus.Errorf("cloudware ListConnections user:%s failed:%v", userName, err)
+		return nil, err
+	}
+	outputs := out.String()
+	lines := strings.Split(outputs, "\n")
+	nums := len(lines)
+	if nums < 3 {
+		return nil, nil
+	}
+
+	allConnections := []ConnectionInfo{}
+	for i, line := range lines {
+		if i >= 2 && i < (nums - 1) {
+			seps := strings.Fields(line)
+			if devName == "" || devName == seps[0] || devName == seps[2] {
+				connection := ConnectionInfo{
+					DeviceName: seps[0],
+					PortName: seps[1],
+					PeerDevice: seps[2],
+					PeerPort: seps[3],
+				}
+				allConnections = append(allConnections, connection)
+			}
+		}
+	}
+	logrus.Debugf("cloudware ListConnections ret:%v", allConnections)
+	return &ConnectionInfoList{Items: allConnections}, nil
+}
+
 func (*driver) StopContainer(userName, boardName string) error {
 	return nil
 
@@ -145,5 +195,18 @@ func (*driver) RemoveContainer(userName, boardName string) error {
 		return err
 	}
 	logrus.Debugf("cloudware remove container ret:%q", out.String())
+	return nil
+}
+
+func (*driver) RemoveConnection(userName, devName, portName string) error {
+	cmd := exec.Command(cloudwarecmd, userName, "disconnect", devName, portName)
+	logrus.Debugf("remove connection cmd:%v", cmd)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run(); if err != nil {
+		logrus.Errorf("cloudware remove connection:%s--%s failed:%v", devName, portName, err)
+		return err
+	}
+	logrus.Debugf("cloudware remove connection ret:%q", out.String())
 	return nil
 }

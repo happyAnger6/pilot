@@ -44,8 +44,11 @@ func main() {
 
 	r.HandleFunc("/network/connect", middlewares.CheckLogin(deploy.NetworkConnect))
 	r.HandleFunc("/network/disconnect/{name}", middlewares.CheckLogin(deploy.NetworkDisconnect))
+	r.HandleFunc("/network/device/connect/{devName}/{devType}/{devCSC}", middlewares.CheckLogin(deploy.NetworkConnectDevice))
+	r.HandleFunc("/network/device/disconnect/{devName}/{devPort}", middlewares.CheckLogin(deploy.NetworkDisconnectDevice))
 
 	r.HandleFunc("/list/boards", middlewares.CheckLogin(list.ListBoards))
+	r.HandleFunc("/list/devices", middlewares.CheckLogin(list.ListDevices))
 	r.HandleFunc("/list/board/details/{name}", middlewares.CheckLogin(list.BoardDetails))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))

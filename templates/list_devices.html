@@ -9,7 +9,7 @@
                 <th>设备名</th>
                 <th>类型</th>
                 <th>框-槽-CPU</th>
-                <th>组网连线</th>
+                <th>组网相关</th>
                 <th>串口</th>
             </tr>
             </thead>
@@ -19,7 +19,7 @@
                 <td>{{.DeviceName}}</td>
                 <td>{{.Type}}</td>
                 <td>{{.CSC}}</td>
-                <td><a href="/network/device/connect/{{.DeviceName}}">连线</a></td>
+                <td><a href="/network/device/connect/{{.DeviceName}}/{{.Type}}/{{.CSC}}">组网相关</a></td>
                 <td><a href="https://172.28.14.35:4200">连接串口</a></td>
             </tr>
             {{end}}

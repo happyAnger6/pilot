@@ -44,6 +44,17 @@ type ImageList struct {
 	Items []ImageInfo
 }
 
+type ConnectionInfo struct {
+	DeviceName string
+	PortName string
+	PeerDevice string
+	PeerPort string
+}
+
+type ConnectionInfoList struct {
+	Items []ConnectionInfo
+}
+
 type Driver interface {
 	String() string
 
@@ -52,6 +63,8 @@ type Driver interface {
 	ListImages(userName string) (*ImageList, error)
 
 	AddUser(userName string) error
+
+	AddConnection(userName, devName, devPort, PeerName, PeerPort string) error
 
 	DelUser(userName string) error
 
@@ -63,7 +76,11 @@ type Driver interface {
 
 	ListDevices(userName string) (*DeviceList, error)
 
+	ListConnections(userName, devName string) (*ConnectionInfoList, error)
+
 	StopContainer(userName, boardName string) error
 
 	RemoveContainer(userName, boardName string) error
+
+	RemoveConnection(userName, devName, portName string) error
 }

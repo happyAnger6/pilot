@@ -9,7 +9,6 @@
                 <th>板名</th>
                 <th>运行状态</th>
                 <th>运行节点</th>
-                <th>组网连线</th>
                 <th>串口</th>
                 <th>操作</th>
             </tr>
@@ -20,7 +19,6 @@
                 <td>{{.BoardName}}</td>
                 <td>{{.Status}}</td>
                 <td>{{.RunNode}}</td>
-                <td><a href="/list/board/details/{{.BoardName}}">详细信息</a></td>
                 <td><a href="https://172.28.14.35:4200">连接串口</a></td>
                 <td><a href="/board/delete/{{.BoardName}}">删除</a></td>
             </tr>
