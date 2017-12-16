@@ -1,12 +1,15 @@
-{{template "header" .}}
+{{template "login_header" .}}
 <div class="container">
  <h3>登陆</h3>
  <form role="form" method="post" action="/login/registry">
  <div class="form-group">
      <div class="row">
+         <p id="warning_username"></p>
+     </div>
+     <div class="row">
  <label for="username">用户名</label>
    <span class="form-group-addon">*</span>
-   <input type="text" class="form-control" placeholder="eg.输入你的名字" name="username" id="username" aria-describedby="username">
+   <input type="text" class="form-control" placeholder="eg.输入你的名字" name="username" id="username" onkeyup="inputCheck(this.id, this.value)" aria-describedby="username">
      </div>
      <br/>
      <br/>

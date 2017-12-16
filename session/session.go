@@ -35,7 +35,7 @@ func HomePage(response http.ResponseWriter, request *http.Request) {
 
 func LoginFailed(w http.ResponseWriter) error {
 	tmpl, err := template.ParseFiles("./templates/login.html", "./templates/header.tpl",
-		"./templates/footer.tpl")
+		"./templates/footer.tpl", "./templates/login_header.tpl")
 	if err != nil {
 		logrus.Errorf("login failed! :%v", err)
 	}
@@ -76,5 +76,6 @@ func SetUserName(name string, w http.ResponseWriter, r *http.Request) error {
 
 	session.Values["username"] = name
 	session.Save(r, w)
+	context.Set(r, CLOUDWARE_USER_KEY, name)
 	return nil
 }

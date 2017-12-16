@@ -98,9 +98,15 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 			return
 		}
 
+		username := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
+		bd.BoardName = username + bd.BoardName
+
 		log.Debugf("board:%v\r\n", bd)
 		d.BoardStore.Store(bd.BoardName, bd)
-		err = d.StartContainer(bd.BoardName, opts)
+		opts.CreateOpts["username"] = username
+		err = d.CloudwareDriver.StartContainer(username, bd.ProjName, bd.BoardType,
+					strconv.FormatInt(bd.ChassisNumber,10), strconv.FormatInt(bd.SlotNumber, 10),
+					strconv.FormatInt(bd.CpuNumber, 10))
 		if err != nil {
 			log.Errorf("start Container failed:%v\r\n", err)
 		}
@@ -129,7 +135,8 @@ func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 	}
 
 	d.BoardStore.Delete(name)
-	err = d.RemoveContainer(name)
+	username := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
+	err = d.CloudwareDriver.RemoveContainer(username, name)
 	if err != nil {
 		log.Errorf("remove Container failed:%v\r\n", err)
 	}
@@ -142,7 +149,7 @@ func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 	}
 
 	linfo := loginfo{
-		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
+		UserName: username,
 	}
 	tmpl.Execute(response, linfo)
 }
