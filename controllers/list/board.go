@@ -20,7 +20,7 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		log.Errorf("Daemon GetInstance err:%v", err)
 		return
 	}
-
+/*
 	type showBoard struct {
 		Name string
 		BoardName string
@@ -48,6 +48,29 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		log.Errorf("list Container failed:%v\r\n", err)
 		return
+	}
+*/
+	type showBoard struct {
+		BoardName string
+		Status string
+		RunNode string
+	}
+	userName := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
+	allContainers, err := d.CloudwareDriver.ListContainers(userName); if err != nil {
+		log.Errorf("ListContainers failed :%v", err)
+		return
+	}
+
+	showBoards := []showBoard{}
+	if allContainers != nil {
+		for _, container := range allContainers.Items {
+			brd := showBoard{
+				BoardName: container.BoardName,
+				Status: container.Status,
+				RunNode: container.RunNode,
+			}
+			showBoards = append(showBoards, brd)
+		}
 	}
 
 	tmpl, err := template.ParseFiles("./templates/list_boards.html","./templates/header.tpl",

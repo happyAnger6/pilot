@@ -9,6 +9,8 @@ type ContainerItem struct {
 	BoardName string
 	BoardType string
 	BoardId	  string
+	Status	  string
+	RunNode	  string
 }
 
 type ContainerList struct {
