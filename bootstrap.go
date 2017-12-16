@@ -46,7 +46,7 @@ func main() {
 	r.HandleFunc("/network/disconnect/{name}", middlewares.CheckLogin(deploy.NetworkDisconnect))
 	r.HandleFunc("/network/device/connect/{devName}/{devType}/{devCSC}", middlewares.CheckLogin(deploy.NetworkConnectDevice))
 	r.HandleFunc("/network/device/disconnect/{devName}/{devPort}", middlewares.CheckLogin(deploy.NetworkDisconnectDevice))
-	r.HandleFunc("/network/device/disconnect/{devName}/{devPort1}/devPort2/devPort3", middlewares.CheckLogin(deploy.NetworkDisconnectDevice))
+	r.HandleFunc("/network/device/disconnect/{devName}/{devPort1}/{devPort2}/{devPort3}", middlewares.CheckLogin(deploy.NetworkDisconnectDevice))
 
 	r.HandleFunc("/list/boards", middlewares.CheckLogin(list.ListBoards))
 	r.HandleFunc("/list/devices", middlewares.CheckLogin(list.ListDevices))
