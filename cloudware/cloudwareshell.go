@@ -18,11 +18,11 @@ func (*driver) String() string {
 	return drivername
 }
 
-func SetImage(userName, iType, name string) error {
+func (*driver) SetImage(userName, iType, name string) error {
 	return nil
 }
 
-func ListImages(userName string) (*ImageList, error) {
+func (*driver) ListImages(userName string) (*ImageList, error) {
 	return nil, nil
 }
 
