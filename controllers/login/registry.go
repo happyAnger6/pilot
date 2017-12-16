@@ -33,7 +33,7 @@ func Registry(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	err = d.UserManagerDriver.AddUser(username); if err != nil {
+	err = d.CloudwareDriver.AddUser(username); if err != nil {
 		logrus.Errorf("AddUser:%s failed :%v", username, err)
 		fmt.Fprintf(response, "%v", err)
 		return

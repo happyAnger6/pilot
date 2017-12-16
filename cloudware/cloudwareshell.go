@@ -1,9 +1,15 @@
 package cloudware
 
-import "os/exec"
+import (
+	"os/exec"
+	"strings"
+	"bytes"
+	"github.com/sirupsen/logrus"
+)
 
 const (
 	drivername="cloudwareshell"
+	cloudwarecmd="cloudware"
 )
 
 type driver struct {
@@ -27,8 +33,15 @@ func (*driver) ListImages(userName string) (*ImageList, error) {
 }
 
 func (*driver) AddUser(userName string) error {
-	cmd := exec.Command("cloudware", "init")
-	return cmd.Run()
+	cmd := exec.Command(cloudwarecmd, "init")
+	cmd.Stdin = strings.NewReader(userName)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run(); if err != nil {
+		logrus.Errorf("cloudware Add user:%s failed:%v", userName, err)
+	}
+	logrus.Debugf("cloudware init ret:%q", out.String())
+	return nil
 }
 
 func (*driver) DelUser(userName string) error {
@@ -40,6 +53,13 @@ func (*driver) ListUser() (*UserList, error) {
 }
 
 func (*driver) StartContainer(userName, boardName, btype, bchassis, bslot, bcpu string) error {
+	cmd := exec.Command(cloudwarecmd, userName, boardName, btype, bchassis + "," + bslot + "," + bcpu)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run(); if err != nil {
+		logrus.Errorf("cloudware Add user:%s failed:%v", userName, err)
+	}
+	logrus.Debugf("cloudware start container ret:%q", out.String())
 	return nil
 }
 
