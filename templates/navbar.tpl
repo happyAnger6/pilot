@@ -23,7 +23,9 @@
                   <!-- <li>创建模板</li> -->
                   <li><a href="/deploy/startBoard">部署</a></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="/list/boards">查看</a></li>
+                  <li class="dropdown-header">查看</li>
+                  <li><a href="/list/boards">按板查看</a></li>
+                  <li><a href="/list/devices">按设备查看</a></li>
                 </ul>
               </li>
             </ul>

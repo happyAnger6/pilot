@@ -92,6 +92,85 @@ func ListBoards(response http.ResponseWriter, request *http.Request) {
 		log.Errorf("execute error :%v", err)
 	}
 }
+func ListDevices(response http.ResponseWriter, request *http.Request) {
+
+	d, err := daemon.GetInstance(); if err != nil {
+		log.Errorf("Daemon GetInstance err:%v", err)
+		return
+	}
+	/*
+		type showBoard struct {
+			Name string
+			BoardName string
+			Type string
+			Chassis string
+			Slot string
+			Cpu string
+			Image string
+		}
+		showBoards := []showBoard{}
+		err = d.BoardStore.Walk(func(b *board.Board) error {
+			brd := showBoard{
+				Name: b.ProjName,
+				BoardName: b.BoardName,
+				Type: b.BoardType,
+				Chassis: strconv.FormatInt(b.ChassisNumber, 10),
+				Slot: strconv.FormatInt(b.SlotNumber, 10),
+				Cpu: strconv.FormatInt(b.CpuNumber, 10),
+				Image: b.Image,
+			}
+			log.Debugf("append board:%v b:%v", brd, b)
+			showBoards = append(showBoards, brd)
+			return nil
+		})
+		if err != nil {
+			log.Errorf("list Container failed:%v\r\n", err)
+			return
+		}
+	*/
+	type showDevice struct{
+		DeviceName string
+		Type string
+		CSC string
+	}
+	userName := context.Get(request, session.CLOUDWARE_USER_KEY).(string)
+	allDevices, err := d.CloudwareDriver.ListDevices(userName); if err != nil {
+		log.Errorf("ListContainers failed :%v", err)
+		return
+	}
+
+	showDevices:= []showDevice{}
+	if allDevices != nil {
+		for _, device := range allDevices.Items {
+			dev := showDevice{
+				DeviceName: device.DeviceName,
+				Type: device.Type,
+				CSC: device.CSC,
+			}
+			showDevices = append(showDevices, dev)
+		}
+	}
+
+	tmpl, err := template.ParseFiles("./templates/list_devices.html","./templates/header.tpl",
+		"./templates/navbar.tpl","./templates/footer.tpl")
+	if err != nil {
+		log.Errorf("Error happened:%v", err)
+		return
+	}
+
+	type listInfo struct{
+		UserName string
+		ShowDevices []showDevice
+	}
+	linfo := listInfo{
+		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
+		ShowDevices: showDevices,
+	}
+	err = tmpl.Execute(response, linfo); if err != nil {
+		log.Errorf("execute error :%v", err)
+	}
+}
+
 
 func BoardDetails(response http.ResponseWriter, request *http.Request) {
 	boardName := mux.Vars(request)["name"]

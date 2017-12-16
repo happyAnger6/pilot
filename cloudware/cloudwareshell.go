@@ -98,11 +98,52 @@ func (*driver) ListContainers(userName string) (*ContainerList, error) {
 	return &ContainerList{Items: allContainers}, nil
 }
 
+func (*driver) ListDevices(userName string) (*DeviceList, error) {
+	cmd := exec.Command(cloudwarecmd, userName, "list", "device")
+	logrus.Debugf("cmd: %v", cmd)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run(); if err != nil {
+		logrus.Errorf("cloudware ListContainers user:%s failed:%v", userName, err)
+		return nil, err
+	}
+	outputs := out.String()
+	lines := strings.Split(outputs, "\n")
+	nums := len(lines)
+	if nums < 2 {
+		return nil, nil
+	}
+
+	allDevices := []DeviceItem{}
+	for i, line := range lines {
+		if i >= 1 && i < (nums - 1) {
+			seps := strings.Fields(line)
+			device := DeviceItem{
+				DeviceName: seps[0],
+				Type: seps[1],
+				CSC: seps[2],
+			}
+			allDevices = append(allDevices, device)
+		}
+	}
+	logrus.Debugf("cloudware ListDevices ret:%v", allDevices)
+	return &DeviceList{Items: allDevices}, nil
+}
+
 func (*driver) StopContainer(userName, boardName string) error {
 	return nil
 
 }
 
 func (*driver) RemoveContainer(userName, boardName string) error {
+	cmd := exec.Command(cloudwarecmd, userName, "delete", boardName)
+	logrus.Debugf("cmd: %v", cmd)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run(); if err != nil {
+		logrus.Errorf("cloudware remove container:%s failed:%v", boardName, err)
+		return err
+	}
+	logrus.Debugf("cloudware remove container ret:%q", out.String())
 	return nil
 }

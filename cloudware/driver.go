@@ -5,6 +5,16 @@ type ContainerOpts struct{
 	CreateOpts map[string]interface{}
 }
 
+type DeviceItem struct {
+	DeviceName string
+	Type string
+	CSC string
+}
+
+type DeviceList struct {
+	Items []DeviceItem
+}
+
 type ContainerItem struct {
 	BoardName string
 	BoardType string
@@ -50,6 +60,8 @@ type Driver interface {
 	StartContainer(userName, boardName, btype, bchassis, bslot, bcpu string) error
 
 	ListContainers(userName string) (*ContainerList, error)
+
+	ListDevices(userName string) (*DeviceList, error)
 
 	StopContainer(userName, boardName string) error
 

@@ -14,6 +14,7 @@ import (
 	"pilot/session"
 	"github.com/sirupsen/logrus"
 	"github.com/gorilla/context"
+	"pilot/controllers/list"
 )
 
 type loginfo struct {
@@ -142,6 +143,8 @@ func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 		log.Errorf("remove Container failed:%v\r\n", err)
 	}
 
+	list.ListBoards(response, request)
+	/*
 	tmpl, err := template.ParseFiles("./templates/list_boards.html","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {
@@ -152,5 +155,5 @@ func DeleteBoard(response http.ResponseWriter, request *http.Request) {
 	linfo := loginfo{
 		UserName: username,
 	}
-	tmpl.Execute(response, linfo)
+	tmpl.Execute(response, linfo)*/
 }

@@ -1,0 +1,30 @@
+{{template "header" .}}
+{{template "navbar" .}}
+<div class="container">
+    <div class="table-responsive">
+        <table class="table">
+            <caption>所有设备</caption>
+            <thead>
+            <tr>
+                <th>设备名</th>
+                <th>类型</th>
+                <th>框-槽-CPU</th>
+                <th>组网连线</th>
+                <th>串口</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .ShowDevices}}
+            <tr>
+                <td>{{.DeviceName}}</td>
+                <td>{{.Type}}</td>
+                <td>{{.CSC}}</td>
+                <td><a href="/network/device/connect/{{.DeviceName}}">连线</a></td>
+                <td><a href="https://172.28.14.35:4200">连接串口</a></td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
+</div> <!--/.div container -->
+{{template "footer" .}}
