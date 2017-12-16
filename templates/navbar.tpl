@@ -26,7 +26,7 @@
                   <li class="dropdown-header">查看</li>
                   <li><a href="/list/boards">按板查看</a></li>
                   <li><a href="/list/devices">按设备查看</a></li>
-                  <li><a href="/list/devices">组网信息</a></li>
+                  <li><a href="/list/network/connections">组网信息</a></li>
                 </ul>
               </li>
             </ul>

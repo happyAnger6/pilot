@@ -3,27 +3,6 @@
 <div class="container">
     <div class="table-responsive">
         <table class="table">
-            <caption>设备信息</caption>
-            <thead>
-            <tr>
-                <th>设备名</th>
-                <th>类型</th>
-                <th>框-槽-CPU</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{.DeviceName}}</td>
-                <td>{{.DeviceType}}</td>
-                <td>{{.DeviceCSC}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <br/>
-    <br/>
-    <div class="table-responsive">
-        <table class="table">
             <caption>设备连接信息</caption>
             <thead>
             <tr>
@@ -48,29 +27,4 @@
         </table>
     </div>
 </div>
-<br/>
-<br/>
-<div class="container">
-    <h1>组网连线</h1>
-<form role="form" method="post" action="/network/device/connect/{{.DeviceName}}/{{.DeviceType}}/{{.DeviceCSC}}">
-    <div class="form-group">
-        <div class="row">
-            <label for="bdevport">本端端口</label>
-            <input type="text" class="form-control" placeholder="eg.ge0/1/1" name="bdevport" id="bdevport" aria-describedby="bdevport">
-        </div>
-        <div class="row">
-            <label for="bpeerdevname">对端设备</label>
-            <input type="text" class="form-control" placeholder="eg.sim01" name="bpeerdevname" id="bpeerdevname" aria-describedby="bpeerdevname">
-        </div>
-        <div class="row">
-            <label for="bpeerdevport">对端port</label>
-            <input type="text" class="form-control" placeholder="eg.ge0/1/0" name="bpeerdevport" id="bpeerdevport" aria-describedby="bpeerdevport">
-        </div>
-        <div class="row">
-            <button type="submit" class="btn btn-lg">连接</button>
-        </div>
-    </div>
-</form>
-</div>
-
 {{template "footer" .}}

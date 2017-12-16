@@ -50,6 +50,7 @@ func main() {
 	r.HandleFunc("/list/boards", middlewares.CheckLogin(list.ListBoards))
 	r.HandleFunc("/list/devices", middlewares.CheckLogin(list.ListDevices))
 	r.HandleFunc("/list/board/details/{name}", middlewares.CheckLogin(list.BoardDetails))
+	r.HandleFunc("/list/network/connections", middlewares.CheckLogin(list.ListConnections))
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 

@@ -144,7 +144,7 @@ func NetworkConnectDevice(response http.ResponseWriter, request *http.Request) {
 		ShowConnections: showConnections,
 	}
 
-	tmpl, err := template.ParseFiles("./templates/list_connections.html","./templates/header.tpl",
+	tmpl, err := template.ParseFiles("./templates/list_oneboard_connections.html","./templates/header.tpl",
 		"./templates/navbar.tpl","./templates/footer.tpl")
 	if err != nil {
 		logrus.Errorf("Error happened:%v", err)
