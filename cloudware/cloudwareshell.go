@@ -5,7 +5,6 @@ import (
 	"strings"
 	"bytes"
 	"github.com/sirupsen/logrus"
-	"k8s.io/kubernetes/pkg/apis/extensions"
 )
 
 const (
