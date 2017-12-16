@@ -121,8 +121,9 @@ func StartBoard(response http.ResponseWriter, request *http.Request) {
 	linfo := loginfo{
 		UserName: context.Get(request, session.CLOUDWARE_USER_KEY).(string),
 	}
-	err = tmpl.Execute(response, linfo)
-	logrus.Debugf("Execute err:%v", err)
+	err = tmpl.Execute(response, linfo); if err != nil {
+		logrus.Debugf("Execute err:%v", err)
+	}
 }
 
 func DeleteBoard(response http.ResponseWriter, request *http.Request) {

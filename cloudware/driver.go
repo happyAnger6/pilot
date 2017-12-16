@@ -11,6 +11,10 @@ type ContainerItem struct {
 	BoardId	  string
 }
 
+type ContainerList struct {
+	Items []ContainerItem
+}
+
 type UserInfo struct {
 	userName string
 }
@@ -19,12 +23,21 @@ type UserList struct {
 	Users []UserInfo
 }
 
-type ContainerList struct {
-	Items []ContainerItem
+type ImageInfo struct {
+	Type string
+	Name string
+}
+
+type ImageList struct {
+	Items []ImageInfo
 }
 
 type Driver interface {
 	String() string
+
+	SetImage(userName, iType, name string) error
+
+	ListImages(userName string) (*ImageList, error)
 
 	AddUser(userName string) error
 

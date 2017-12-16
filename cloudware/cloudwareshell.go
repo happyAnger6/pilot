@@ -18,6 +18,14 @@ func (*driver) String() string {
 	return drivername
 }
 
+func SetImage(userName, iType, name string) error {
+	return nil
+}
+
+func ListImages(userName string) (*ImageList, error) {
+	return nil, nil
+}
+
 func (*driver) AddUser(userName string) error {
 	cmd := exec.Command("cloudware", "init")
 	return cmd.Run()
